@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="বাংলাদেশ ইসলামী ছাত্রশিবির — অফিসিয়াল প্রোফাইল">
+    <title>দায়িত্বশীলের নাম — বাংলাদেশ ইসলামী ছাত্রশিবির</title>
+    <link rel="icon" id="favicon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-flag">
+                <div class="flag-bar green"></div>
+                <div class="flag-circle"></div>
+            </div>
+            <h2 class="preloader-name">দায়িত্বশীলের নাম</h2>
+            <div class="preloader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Toast -->
+    <div id="toast"></div>
+
+    <!-- Ticker -->
+    <div class="ticker-bar" id="tickerBar">
+        <div class="ticker-label"><i class="fas fa-bullhorn"></i> সর্বশেষ</div>
+        <div class="ticker-wrap">
+            <div class="ticker-content" id="tickerContent">
+                <span>📢 তথ্য লোড হচ্ছে...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="nav-icon" id="navIcon">☪️</span>
+                <span class="nav-name" id="navName">দায়িত্বশীলের নাম</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero" class="nav-link active">হোম</a></li>
+                <li><a href="#about" class="nav-link">পরিচয়</a></li>
+                <li><a href="#news" class="nav-link">পোস্ট</a></li>
+                <li><a href="#gallery" class="nav-link">গ্যালারি</a></li>
+                <li><a href="#contact" class="nav-link">যোগাযোগ</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="থিম পরিবর্তন">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="lang-toggle" id="langToggle" title="Language Toggle">
+                    EN
+                </button>
+                <button class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-header">
+            <span class="nav-icon" id="sidebarIcon">☪️</span>
+            <span class="nav-name" id="sidebarName">দায়িত্বশীলের নাম</span>
+            <button class="sidebar-close" id="sidebarClose"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="#hero"><i class="fas fa-home"></i> হোম</a></li>
+            <li><a href="#about"><i class="fas fa-user"></i> পরিচয়</a></li>
+            <li><a href="#news"><i class="fas fa-newspaper"></i> পোস্ট</a></li>
+            <li><a href="#gallery"><i class="fas fa-images"></i> গ্যালারি</a></li>
+            <li><a href="#contact"><i class="fas fa-envelope"></i> যোগাযোগ</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <canvas class="hero-particles" id="heroParticles"></canvas>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge"><i class="fas fa-star-and-crescent"></i> বাংলাদেশ ইসলামী ছাত্রশিবির</div>
+            <div class="hero-photo-wrap" data-aos="zoom-in">
+                <img src="https://via.placeholder.com/300x300?text=Photo" alt="Leader Photo" class="hero-photo" id="heroPhoto">
+            </div>
+            <h1 class="hero-name" id="heroName" data-aos="fade-up">দায়িত্বশীলের নাম</h1>
+            <p class="hero-designation" id="heroDesignation" data-aos="fade-up" data-aos-delay="100">সাংগঠনিক পদবী</p>
+            <p class="hero-party" id="heroParty" data-aos="fade-up" data-aos-delay="200">বাংলাদেশ ইসলামী ছাত্রশিবির</p>
+            <p class="hero-slogan" id="heroSlogan" data-aos="fade-up" data-aos-delay="300">"ইসলাম ও মানবতার সেবায় নিবেদিত"</p>
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="15" id="statYears">0</span>
+                    <span class="stat-label" id="statYearsLabel">বছরের সাংগঠনিক অভিজ্ঞতা</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="statConstituency">—</span>
+                    <span class="stat-label">নির্বাচনী এলাকা</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="120" id="statProjects">0</span>
+                    <span class="stat-label">প্রকল্প সম্পন্ন</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="statFollowers">০</span>
+                    <span class="stat-label">অনুসারী</span>
+                </div>
+            </div>
+            <div class="hero-cta" data-aos="fade-up" data-aos-delay="500">
+                <a href="#contact" class="btn btn-primary"><i class="fas fa-envelope"></i> যোগাযোগ করুন</a>
+                <a href="#about" class="btn btn-outline"><i class="fas fa-info-circle"></i> আরও জানুন</a>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,60 C360,120 1080,0 1440,60 L1440,120 L0,120 Z" fill="var(--bg)"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="about">
+        <div class="container">
+            <div class="section-tag" data-aos="fade-up">পরিচিতি</div>
+            <h2 class="section-title" data-aos="fade-up">ব্যক্তিগত পরিচিতি</h2>
+            <div class="about-grid">
+                <div class="about-photo-wrap" data-aos="fade-right">
+                    <img src="https://via.placeholder.com/400x500?text=About+Photo" alt="About Photo" class="about-photo" id="aboutPhoto">
+                </div>
+                <div class="about-content" data-aos="fade-left">
+                    <p class="about-bio" id="aboutBio">পরিচিতি এখানে প্রদর্শিত হবে। অ্যাডমিন প্যানেল থেকে সম্পাদনা করুন।</p>
+                    <div class="about-info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div>
+                                <strong>জন্ম তারিখ</strong>
+                                <span id="aboutBirth">—</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>জন্মস্থান</strong>
+                                <span id="aboutPlace">—</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <strong>শিক্ষা</strong>
+                                <span id="aboutEdu">—</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-briefcase"></i>
+                            <div>
+                                <strong>সাংগঠনিক পদ</strong>
+                                <span id="aboutProfession">—</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-flag"></i>
+                            <div>
+                                <strong>সংগঠন</strong>
+                                <span id="aboutParty">—</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-social">
+                        <a href="#" id="aboutFb" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" id="aboutYt" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" id="aboutTw" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="section news-section" id="news">
+        <div class="container">
+            <div class="section-tag" data-aos="fade-up">পোস্ট & ব্লগ</div>
+            <h2 class="section-title" data-aos="fade-up">সাম্প্রতিক পোস্ট</h2>
+            <div class="filter-buttons" data-aos="fade-up" id="newsFilters">
+                <button class="filter-btn active" data-filter="all">সকল</button>
+                <button class="filter-btn" data-filter="national">সাংগঠনিক</button>
+                <button class="filter-btn" data-filter="local">ইসলামিক</button>
+                <button class="filter-btn" data-filter="party">ব্যক্তিগত</button>
+            </div>
+            <div class="news-grid" id="newsGrid">
+                <div class="news-placeholder">
+                    <i class="fas fa-newspaper"></i>
+                    <p>পোস্ট লোড হচ্ছে...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section gallery-section" id="gallery">
+        <div class="container">
+            <div class="section-tag" data-aos="fade-up">গ্যালারি</div>
+            <h2 class="section-title" data-aos="fade-up">ছবির গ্যালারি</h2>
+            <div class="filter-buttons" data-aos="fade-up" id="galleryFilters">
+                <button class="filter-btn active" data-filter="all">সকল</button>
+                <button class="filter-btn" data-filter="visit">কর্মসূচি</button>
+                <button class="filter-btn" data-filter="event">অনুষ্ঠান</button>
+                <button class="filter-btn" data-filter="parliament">সভা-সমাবেশ</button>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <div class="news-placeholder">
+                    <i class="fas fa-images"></i>
+                    <p>গ্যালারি লোড হচ্ছে...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+        <img src="" alt="" class="lightbox-img" id="lightboxImg">
+        <p class="lightbox-caption" id="lightboxCaption"></p>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="section contact-section" id="contact">
+        <div class="container">
+            <div class="section-tag" data-aos="fade-up">যোগাযোগ</div>
+            <h2 class="section-title" data-aos="fade-up">যোগাযোগ করুন</h2>
+            <div class="contact-grid">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>ঠিকানা</strong>
+                            <span id="contactAddress">ঠিকানা লোড হচ্ছে...</span>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <strong>ফোন</strong>
+                            <span id="contactPhone">—</span>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>ইমেইল</strong>
+                            <span id="contactEmail">—</span>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>অফিস সময়</strong>
+                            <span id="contactHours">—</span>
+                        </div>
+                    </div>
+                    <div class="contact-map">
+                        <iframe id="contactMap" src="" width="100%" height="250" style="border:0; border-radius:12px;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+                <div class="contact-form-wrap" data-aos="fade-left">
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="msgName">আপনার নাম</label>
+                            <input type="text" id="msgName" required placeholder="পূর্ণ নাম লিখুন">
+                        </div>
+                        <div class="form-group">
+                            <label for="msgPhone">মোবাইল নম্বর</label>
+                            <input type="tel" id="msgPhone" required placeholder="01XXXXXXXXX">
+                        </div>
+                        <div class="form-group">
+                            <label for="msgSubject">বিষয়</label>
+                            <input type="text" id="msgSubject" required placeholder="বার্তার বিষয়">
+                        </div>
+                        <div class="form-group">
+                            <label for="msgBody">বার্তা</label>
+                            <textarea id="msgBody" rows="5" required placeholder="আপনার বার্তা লিখুন..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-paper-plane"></i> বার্তা পাঠান
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 class="footer-logo"><span id="footerIcon">☪️</span> <span id="footerName">দায়িত্বশীলের নাম</span></h3>
+                    <p class="footer-desc">ইসলাম ও মানবতার সেবায় বাংলাদেশ ইসলামী ছাত্রশিবিরের একজন দায়িত্বশীল সদস্য।</p>
+                </div>
+                <div class="footer-col">
+                    <h4>দ্রুত লিংক</h4>
+                    <ul>
+                        <li><a href="#hero">হোম</a></li>
+                        <li><a href="#about">পরিচিতি</a></li>
+                        <li><a href="#news">পোস্ট</a></li>
+                        <li><a href="#gallery">গ্যালারি</a></li>
+                        <li><a href="#contact">যোগাযোগ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>যোগাযোগ</h4>
+                    <p id="footerAddress"><i class="fas fa-map-marker-alt"></i> ঠিকানা</p>
+                    <p id="footerPhone"><i class="fas fa-phone-alt"></i> ফোন</p>
+                    <p id="footerEmail"><i class="fas fa-envelope"></i> ইমেইল</p>
+                </div>
+                <div class="footer-col">
+                    <h4>সোশ্যাল মিডিয়া</h4>
+                    <div class="footer-social">
+                        <a href="#" id="footerFb" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" id="footerYt" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="#" id="footerTw" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="footerYear">2025</span> সর্বস্বত্ব সংরক্ষিত। <span id="footerCopyName">দায়িত্বশীলের নাম</span></p>
+                <p class="dev-credit">Designed & Developed by <strong>Csm Mohasin Alam</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Buttons -->
+    <div class="floating-btns">
+        <a href="#" id="floatWhatsApp" class="float-btn whatsapp-btn" target="_blank" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="#" id="floatCall" class="float-btn call-btn" title="কল করুন">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+    </div>
+
+    <!-- Scroll to top -->
+    <button class="scroll-top" id="scrollTop" title="উপরে যান">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

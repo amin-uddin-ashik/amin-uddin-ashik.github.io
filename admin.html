@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অ্যাডমিন প্যানেল — বাংলাদেশ ইসলামী ছাত্রশিবির</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ===== ADMIN PANEL STYLES ===== */
+        :root {
+            --navy: #0a1628;
+            --navy-light: #132040;
+            --navy-mid: #1a2d50;
+            --gold: #c9a227;
+            --gold-light: #e6c44d;
+            --gold-dark: #9e7e1e;
+            --white: #ffffff;
+            --text-primary: #ffffff;
+            --text-secondary: #b8c5d6;
+            --text-muted: #7a8ca3;
+            --bg-primary: #0a1628;
+            --bg-secondary: #132040;
+            --bg-card: #1a2d50;
+            --border-color: rgba(201,162,39,0.2);
+            --transition: 0.3s ease;
+            --radius: 12px;
+            --danger: #e74c3c;
+            --success: #27ae60;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; border: none; font-family: inherit; outline: none; }
+        input, textarea, select { font-family: inherit; outline: none; }
+
+        /* ===== LOGIN PAGE ===== */
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 50%, var(--navy-mid) 100%);
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header .icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .login-header h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        .login-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-form label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            transition: border-color var(--transition);
+        }
+
+        .login-form input:focus {
+            border-color: var(--gold);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            background: var(--gold);
+            color: var(--navy);
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all var(--transition);
+        }
+
+        .login-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .login-error {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .login-error.show { display: block; }
+
+        /* ===== ADMIN LAYOUT ===== */
+        .admin-layout {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .admin-layout.active { display: flex; }
+
+        /* Sidebar */
+        .admin-sidebar {
+            width: 270px;
+            background: var(--navy-light);
+            border-right: 1px solid var(--border-color);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: left var(--transition);
+        }
+
+        .admin-sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-sidebar-header h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 1.1rem;
+        }
+
+        .admin-sidebar-header .icon { font-size: 1.5rem; }
+
+        .admin-nav {
+            padding: 15px 10px;
+        }
+
+        .admin-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            font-weight: 500;
+            transition: all var(--transition);
+            margin-bottom: 4px;
+            position: relative;
+        }
+
+        .admin-nav-item:hover {
+            background: var(--bg-card);
+            color: var(--gold);
+        }
+
+        .admin-nav-item.active {
+            background: rgba(201,162,39,0.15);
+            color: var(--gold);
+            border-left: 3px solid var(--gold);
+        }
+
+        .admin-nav-item i { width: 20px; text-align: center; }
+
+        .nav-badge {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .admin-nav-item.logout {
+            margin-top: 20px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
+            color: var(--danger);
+        }
+
+        .admin-nav-item.logout:hover { background: rgba(231,76,60,0.1); }
+
+        /* Main content */
+        .admin-main {
+            flex: 1;
+            margin-left: 270px;
+            min-height: 100vh;
+            transition: margin-left var(--transition);
+        }
+
+        .admin-topbar {
+            height: 60px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .admin-hamburger {
+            display: none;
+            background: transparent;
+            color: var(--gold);
+            font-size: 1.3rem;
+            margin-right: 15px;
+        }
+
+        .admin-topbar h3 {
+            color: var(--gold);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .admin-content {
+            padding: 25px;
+        }
+
+        /* Panels */
+        .admin-panel {
+            display: none;
+        }
+        .admin-panel.active { display: block; }
+
+        /* Cards */
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Form styles */
+        .admin-form {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .admin-form h4 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            transition: border-color var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--gold);
+        }
+
+        .form-group textarea { resize: vertical; min-height: 100px; }
+
+        /* Upload Button */
+        .cl-upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: rgba(201,162,39,0.1);
+            border: 1px dashed var(--gold);
+            border-radius: 8px;
+            color: var(--gold);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all var(--transition);
+            margin-top: 8px;
+        }
+
+        .cl-upload-btn:hover {
+            background: rgba(201,162,39,0.2);
+        }
+
+        .cl-upload-btn input[type="file"] { display: none; }
+
+        .cl-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-top: 10px;
+            display: none;
+        }
+
+        .cl-preview.show { display: block; }
+
+        .upload-progress {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .upload-progress.show { display: block; }
+
+        .upload-progress-bar {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 4px;
+            width: 0;
+            transition: width 0.3s;
+        }
+
+        /* Buttons */
+        .btn-save {
+            padding: 12px 28px;
+            border-radius: 8px;
+            background: var(--gold);
+            color: var(--navy);
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all var(--transition);
+        }
+
+        .btn-save:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-delete {
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(231,76,60,0.1);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .btn-delete:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-edit {
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(201,162,39,0.1);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .btn-edit:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .btn-add {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: var(--success);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+            margin-bottom: 20px;
+        }
+
+        .btn-add:hover { opacity: 0.9; }
+
+        /* List items */
+        .list-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all var(--transition);
+        }
+
+        .list-item:hover { border-color: var(--gold); }
+
+        .list-item-img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .list-item-info { flex: 1; }
+        .list-item-info h5 { color: var(--text-primary); font-size: 0.95rem; margin-bottom: 3px; }
+        .list-item-info p { color: var(--text-muted); font-size: 0.8rem; }
+
+        .list-item-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Message card */
+        .msg-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 18px;
+            margin-bottom: 12px;
+        }
+
+        .msg-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .msg-card-header h5 { color: var(--gold); font-size: 0.95rem; }
+        .msg-card-header span { color: var(--text-muted); font-size: 0.75rem; }
+        .msg-card p { color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 5px; }
+        .msg-card .msg-phone { color: var(--text-muted); font-size: 0.8rem; }
+
+        /* Toggle */
+        .toggle-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            transition: var(--transition);
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 2px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: rgba(201,162,39,0.2);
+            border-color: var(--gold);
+        }
+
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(19px);
+            background: var(--gold);
+        }
+
+        /* Toast */
+        #adminToast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--navy-mid);
+            color: var(--white);
+            padding: 14px 28px;
+            border-radius: 50px;
+            border: 1px solid var(--gold);
+            font-size: 0.9rem;
+            z-index: 99999;
+            opacity: 0;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(201,162,39,0.3);
+        }
+
+        #adminToast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Confirm Modal */
+        .confirm-modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+        }
+
+        .confirm-modal.show { display: flex; }
+
+        .confirm-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            max-width: 380px;
+            width: 90%;
+        }
+
+        .confirm-box p { color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem; }
+
+        .confirm-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .confirm-actions .btn-save { padding: 10px 24px; font-size: 0.85rem; }
+        .confirm-actions .btn-delete { padding: 10px 24px; font-size: 0.85rem; }
+
+        /* Gallery grid admin */
+        .admin-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .admin-gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .admin-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .admin-gallery-item .delete-overlay {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--danger);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .admin-gallery-item:hover .delete-overlay { opacity: 1; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                left: -270px;
+            }
+            .admin-sidebar.open { left: 0; }
+            .admin-main { margin-left: 0; }
+            .admin-hamburger { display: block; }
+            .form-row { grid-template-columns: 1fr; }
+            .stat-cards { grid-template-columns: 1fr 1fr; }
+            .list-item { flex-direction: column; align-items: flex-start; }
+            .list-item-actions { align-self: flex-end; }
+        }
+
+        /* Sidebar overlay on mobile */
+        .admin-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+        .admin-overlay.show { display: block; }
+    </style>
+</head>
+<body>
+    <!-- Toast -->
+    <div id="adminToast"></div>
+
+    <!-- Confirm Modal -->
+    <div class="confirm-modal" id="confirmModal">
+        <div class="confirm-box">
+            <p id="confirmText">আপনি কি নিশ্চিত?</p>
+            <div class="confirm-actions">
+                <button class="btn-save" id="confirmYes">হ্যাঁ, মুছুন</button>
+                <button class="btn-delete" id="confirmNo" style="background: var(--bg-primary); color: var(--text-secondary); border-color: var(--border-color);">বাতিল</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div class="login-page" id="loginPage">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="icon">🏛️</div>
+                <h1>অ্যাডমিন প্যানেল</h1>
+                <p>লগইন করতে আপনার তথ্য দিন</p>
+            </div>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">ইমেইল</label>
+                    <input type="email" id="loginEmail" required placeholder="admin@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">পাসওয়ার্ড</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> লগইন
+                </button>
+                <p class="login-error" id="loginError">ইমেইল বা পাসওয়ার্ড সঠিক নয়!</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADMIN LAYOUT -->
+    <div class="admin-layout" id="adminLayout">
+        <!-- Overlay for mobile -->
+        <div class="admin-overlay" id="adminOverlay"></div>
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-header">
+                <span class="icon">🏛️</span>
+                <h2>অ্যাডমিন</h2>
+            </div>
+            <nav class="admin-nav">
+                <a href="#" class="admin-nav-item active" data-panel="dashboard">
+                    <i class="fas fa-chart-pie"></i> ড্যাশবোর্ড
+                </a>
+                <a href="#" class="admin-nav-item" data-panel="profile">
+                    <i class="fas fa-user"></i> প্রোফাইল সেটিংস
+                </a>
+                <a href="#" class="admin-nav-item" data-panel="stats">
+                    <i class="fas fa-chart-bar"></i> পরিসংখ্যান
+                </a>
+                <a href="#" class="admin-nav-item" data-panel="about">
+                    <i class="fas fa-id-card"></i> পরিচয় / বায়ো
+                </a>
+                <a href="#" class="admin-nav-item" data-panel="news">
+                    <i class="fas fa-newspaper"></i> পোস্ট ব্যবস্থাপনা
+                </a>
+                <a href="#" class="admin-nav-item" data-panel="gallery">
+                    <i class="fas fa-images"></i> গ্যালারি
+                </a>
+                <a href="#" class="admin-nav-item" data-panel="ticker">
+                    <i class="fas fa-bullhorn"></i> টিকার নোটিশ
+                </a>
+                <a href="#" class="admin-nav-item" data-panel="messages">
+                    <i class="fas fa-envelope"></i> বার্তাসমূহ
+                    <span class="nav-badge" id="msgBadge" style="display:none;">0</span>
+                </a>
+                <a href="#" class="admin-nav-item" data-panel="contact">
+                    <i class="fas fa-address-book"></i> যোগাযোগ তথ্য
+                </a>
+                <a href="#" class="admin-nav-item logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> লগআউট
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <main class="admin-main">
+            <div class="admin-topbar">
+                <button class="admin-hamburger" id="adminHamburger">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h3 id="topbarTitle">ড্যাশবোর্ড</h3>
+            </div>
+            <div class="admin-content">
+
+                <!-- DASHBOARD -->
+                <div class="admin-panel active" id="panel-dashboard">
+                    <div class="stat-cards">
+                        <div class="stat-card">
+                            <div class="number" id="dashNews">0</div>
+                            <div class="label">মোট পোস্ট</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="number" id="dashGallery">0</div>
+                            <div class="label">গ্যালারি ছবি</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="number" id="dashMessages">0</div>
+                            <div class="label">বার্তাসমূহ</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="number" id="dashTicker">0</div>
+                            <div class="label">সক্রিয় টিকার</div>
+                        </div>
+                    </div>
+                    <div class="admin-form">
+                        <h4>সাম্প্রতিক বার্তা</h4>
+                        <div id="dashRecentMsgs">
+                            <p style="color: var(--text-muted);">কোনো বার্তা নেই</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILE SETTINGS -->
+                <div class="admin-panel" id="panel-profile">
+                    <div class="admin-form">
+                        <h4><i class="fas fa-user-edit"></i> প্রোফাইল সেটিংস</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>নাম (বাংলা)</label>
+                                <input type="text" id="profNameBn" placeholder="দায়িত্বশীলের নাম (বাংলায়)">
+                            </div>
+                            <div class="form-group">
+                                <label>নাম (ইংরেজি)</label>
+                                <input type="text" id="profNameEn" placeholder="Leader Name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>পদবি / পরিচয়</label>
+                                <input type="text" id="profDesignation" placeholder="সাংগঠনিক পদবী (যেমন: সভাপতি, সেক্রেটারি)">
+                            </div>
+                            <div class="form-group">
+                                <label>সংগঠনের নাম</label>
+                                <input type="text" id="profParty" placeholder="বাংলাদেশ ইসলামী ছাত্রশিবির">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>স্লোগান / উক্তি</label>
+                            <input type="text" id="profSlogan" placeholder="জনগণের সেবায় নিবেদিত">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>হিরো ফটো URL</label>
+                                <input type="text" id="profHeroPhoto" placeholder="https://...">
+                                <label class="cl-upload-btn">
+                                    <input type="file" accept="image/*" id="profHeroPhotoFile">
+                                    <i class="fas fa-cloud-upload-alt"></i> ছবি আপলোড
+                                </label>
+                                <div class="upload-progress" id="profHeroPhotoProgress">
+                                    <div class="upload-progress-bar" id="profHeroPhotoProgressBar"></div>
+                                </div>
+                                <img class="cl-preview" id="profHeroPhotoPreview">
+                            </div>
+                            <div class="form-group">
+                                <label>নেভ আইকন (ইমোজি)</label>
+                                <input type="text" id="profNavIcon" placeholder="🏛️">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>ফেভিকন URL</label>
+                                <input type="text" id="profFavicon" placeholder="https://...">
+                                <label class="cl-upload-btn">
+                                    <input type="file" accept="image/*" id="profFaviconFile">
+                                    <i class="fas fa-cloud-upload-alt"></i> ছবি আপলোড
+                                </label>
+                                <div class="upload-progress" id="profFaviconProgress">
+                                    <div class="upload-progress-bar" id="profFaviconProgressBar"></div>
+                                </div>
+                                <img class="cl-preview" id="profFaviconPreview">
+                            </div>
+                            <div class="form-group">
+                                <label>Meta Description</label>
+                                <textarea id="profMeta" rows="3" placeholder="সাইটের বিবরণ..."></textarea>
+                            </div>
+                        </div>
+                        <button class="btn-save" id="saveProfile"><i class="fas fa-save"></i> সংরক্ষণ করুন</button>
+                    </div>
+                </div>
+
+                <!-- STATS -->
+                <div class="admin-panel" id="panel-stats">
+                    <div class="admin-form">
+                        <h4><i class="fas fa-chart-bar"></i> পরিসংখ্যান</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>সাংগঠনিক অভিজ্ঞতা (বছর)</label>
+                                <input type="number" id="statsYears" placeholder="15">
+                            </div>
+                            <div class="form-group">
+                                <label>শাখা / ইউনিট</label>
+                                <input type="text" id="statsConstituency" placeholder="ঢাকা-১">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>কর্মসূচি সম্পন্ন</label>
+                                <input type="number" id="statsProjects" placeholder="120">
+                            </div>
+                            <div class="form-group">
+                                <label>অনুসারী</label>
+                                <input type="text" id="statsFollowers" placeholder="৫০,০০০+">
+                            </div>
+                        </div>
+                        <button class="btn-save" id="saveStats"><i class="fas fa-save"></i> সংরক্ষণ করুন</button>
+                    </div>
+                </div>
+
+                <!-- ABOUT -->
+                <div class="admin-panel" id="panel-about">
+                    <div class="admin-form">
+                        <h4><i class="fas fa-id-card"></i> পরিচয় / বায়ো</h4>
+                        <div class="form-group">
+                            <label>জীবনী (বিস্তারিত)</label>
+                            <textarea id="aboutBioAdmin" rows="6" placeholder="দীর্ঘ জীবনী এখানে লিখুন..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>ছবি URL</label>
+                            <input type="text" id="aboutPhotoAdmin" placeholder="https://...">
+                            <label class="cl-upload-btn">
+                                <input type="file" accept="image/*" id="aboutPhotoFile">
+                                <i class="fas fa-cloud-upload-alt"></i> ছবি আপলোড
+                            </label>
+                            <div class="upload-progress" id="aboutPhotoProgress">
+                                <div class="upload-progress-bar" id="aboutPhotoProgressBar"></div>
+                            </div>
+                            <img class="cl-preview" id="aboutPhotoPreview">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>জন্ম তারিখ</label>
+                                <input type="text" id="aboutBirthAdmin" placeholder="১ জানুয়ারি, ১৯৭০">
+                            </div>
+                            <div class="form-group">
+                                <label>জন্মস্থান</label>
+                                <input type="text" id="aboutPlaceAdmin" placeholder="ঢাকা, বাংলাদেশ">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>শিক্ষা</label>
+                                <input type="text" id="aboutEduAdmin" placeholder="এম.এ, ঢাকা বিশ্ববিদ্যালয়">
+                            </div>
+                            <div class="form-group">
+                                <label>সাংগঠনিক পদ</label>
+                                <input type="text" id="aboutProfAdmin" placeholder="দায়িত্বশীল, সদস্য ইত্যাদি">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>সংগঠন</label>
+                            <input type="text" id="aboutPartyAdmin" placeholder="বাংলাদেশ ইসলামী ছাত্রশিবির">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Facebook URL</label>
+                                <input type="url" id="aboutFbAdmin" placeholder="https://facebook.com/...">
+                            </div>
+                            <div class="form-group">
+                                <label>YouTube URL</label>
+                                <input type="url" id="aboutYtAdmin" placeholder="https://youtube.com/...">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Twitter/X URL</label>
+                            <input type="url" id="aboutTwAdmin" placeholder="https://x.com/...">
+                        </div>
+                        <button class="btn-save" id="saveAbout"><i class="fas fa-save"></i> সংরক্ষণ করুন</button>
+                    </div>
+                </div>
+
+                <!-- NEWS -->
+                <div class="admin-panel" id="panel-news">
+                    <button class="btn-add" id="addNewsBtn"><i class="fas fa-plus"></i> নতুন পোস্ট যোগ করুন</button>
+                    
+                    <!-- News Form -->
+                    <div class="admin-form" id="newsFormWrap" style="display:none;">
+                        <h4 id="newsFormTitle"><i class="fas fa-newspaper"></i> নতুন পোস্ট</h4>
+                        <input type="hidden" id="newsEditId">
+                        <div class="form-group">
+                            <label>শিরোনাম</label>
+                            <input type="text" id="newsTitle" placeholder="পোস্টের শিরোনাম">
+                        </div>
+                        <div class="form-group">
+                            <label>বিস্তারিত</label>
+                            <textarea id="newsBody" rows="4" placeholder="পোস্টের বিস্তারিত লিখুন..."></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>তারিখ</label>
+                                <input type="text" id="newsDate" placeholder="২৫ মে, ২০২৫">
+                            </div>
+                            <div class="form-group">
+                                <label>ক্যাটাগরি</label>
+                                <select id="newsCategory">
+                                    <option value="national">সাংগঠনিক</option>
+                                    <option value="local">ইসলামিক</option>
+                                    <option value="party">ব্যক্তিগত</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>ছবি URL</label>
+                            <input type="text" id="newsImage" placeholder="https://...">
+                            <label class="cl-upload-btn">
+                                <input type="file" accept="image/*" id="newsImageFile">
+                                <i class="fas fa-cloud-upload-alt"></i> ছবি আপলোড
+                            </label>
+                            <div class="upload-progress" id="newsImageProgress">
+                                <div class="upload-progress-bar" id="newsImageProgressBar"></div>
+                            </div>
+                            <img class="cl-preview" id="newsImagePreview">
+                        </div>
+                        <div class="form-group">
+                            <label>বাহ্যিক লিংক (ঐচ্ছিক)</label>
+                            <input type="url" id="newsLink" placeholder="https://...">
+                        </div>
+                        <div class="toggle-wrap">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="newsActive" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span style="color: var(--text-secondary); font-size:0.85rem;">সক্রিয়</span>
+                        </div>
+                        <br>
+                        <button class="btn-save" id="saveNews"><i class="fas fa-save"></i> সংরক্ষণ করুন</button>
+                        <button class="btn-delete" id="cancelNews" style="margin-left:10px;">বাতিল</button>
+                    </div>
+
+                    <!-- News List -->
+                    <div id="newsList"></div>
+                </div>
+
+                <!-- GALLERY -->
+                <div class="admin-panel" id="panel-gallery">
+                    <div class="admin-form">
+                        <h4><i class="fas fa-images"></i> নতুন ছবি যোগ করুন</h4>
+                        <div class="form-group">
+                            <label>ছবি আপলোড</label>
+                            <label class="cl-upload-btn">
+                                <input type="file" accept="image/*" id="galleryImageFile" multiple>
+                                <i class="fas fa-cloud-upload-alt"></i> ছবি নির্বাচন করুন
+                            </label>
+                            <div class="upload-progress" id="galleryImageProgress">
+                                <div class="upload-progress-bar" id="galleryImageProgressBar"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>শিরোনাম</label>
+                                <input type="text" id="galleryTitle" placeholder="ছবির শিরোনাম">
+                            </div>
+                            <div class="form-group">
+                                <label>ক্যাটাগরি</label>
+                                <select id="galleryCategory">
+                                    <option value="visit">কর্মসূচি</option>
+                                    <option value="event">অনুষ্ঠান</option>
+                                    <option value="parliament">সভা-সমাবেশ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="toggle-wrap">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="galleryActive" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span style="color: var(--text-secondary); font-size:0.85rem;">সক্রিয়</span>
+                        </div>
+                        <br>
+                        <button class="btn-save" id="saveGallery"><i class="fas fa-save"></i> ছবি সংরক্ষণ করুন</button>
+                    </div>
+                    <div class="admin-form">
+                        <h4>বর্তমান গ্যালারি</h4>
+                        <div class="admin-gallery-grid" id="adminGalleryGrid">
+                            <p style="color: var(--text-muted);">কোনো ছবি নেই</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TICKER -->
+                <div class="admin-panel" id="panel-ticker">
+                    <div class="admin-form">
+                        <h4><i class="fas fa-bullhorn"></i> নতুন টিকার যোগ করুন</h4>
+                        <div class="form-group">
+                            <label>টিকার টেক্সট</label>
+                            <input type="text" id="tickerText" placeholder="📢 বিজ্ঞপ্তি বা নোটিশ লিখুন...">
+                        </div>
+                        <div class="toggle-wrap">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="tickerActive" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span style="color: var(--text-secondary); font-size:0.85rem;">সক্রিয়</span>
+                        </div>
+                        <br>
+                        <button class="btn-save" id="saveTicker"><i class="fas fa-save"></i> যোগ করুন</button>
+                    </div>
+                    <div class="admin-form">
+                        <h4>বর্তমান টিকার আইটেম</h4>
+                        <div id="tickerList">
+                            <p style="color: var(--text-muted);">কোনো টিকার নেই</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MESSAGES -->
+                <div class="admin-panel" id="panel-messages">
+                    <div class="admin-form">
+                        <h4><i class="fas fa-envelope"></i> বার্তাসমূহ</h4>
+                        <div id="messagesList">
+                            <p style="color: var(--text-muted);">কোনো বার্তা নেই</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTACT -->
+                <div class="admin-panel" id="panel-contact">
+                    <div class="admin-form">
+                        <h4><i class="fas fa-address-book"></i> যোগাযোগ তথ্য</h4>
+                        <div class="form-group">
+                            <label>সম্পূর্ণ ঠিকানা</label>
+                            <textarea id="contactAddrFull" rows="2" placeholder="বিস্তারিত ঠিকানা..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>সংক্ষিপ্ত ঠিকানা (ফুটারের জন্য)</label>
+                            <input type="text" id="contactAddrShort" placeholder="সংক্ষিপ্ত ঠিকানা">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>ফোন (প্রদর্শন)</label>
+                                <input type="text" id="contactPhoneFull" placeholder="+৮৮০ ১XXXXXXXXX">
+                            </div>
+                            <div class="form-group">
+                                <label>ফোন (সংক্ষিপ্ত)</label>
+                                <input type="text" id="contactPhoneShort" placeholder="01XXXXXXXXX">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>ইমেইল</label>
+                                <input type="email" id="contactEmailAdmin" placeholder="info@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>অফিস সময়</label>
+                                <input type="text" id="contactHoursAdmin" placeholder="রবি-বৃহঃ: সকাল ৯:০০ - বিকাল ৫:০০">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Google Maps Embed URL</label>
+                            <input type="url" id="contactMapAdmin" placeholder="https://www.google.com/maps?q=...&output=embed">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>WhatsApp নম্বর (দেশকোড সহ)</label>
+                                <input type="text" id="contactWaAdmin" placeholder="8801XXXXXXXXX">
+                            </div>
+                            <div class="form-group">
+                                <label>কল নম্বর</label>
+                                <input type="text" id="contactCallAdmin" placeholder="+8801XXXXXXXXX">
+                            </div>
+                        </div>
+                        <button class="btn-save" id="saveContact"><i class="fas fa-save"></i> সংরক্ষণ করুন</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="admin-script.js"></script>
+</body>
+</html>

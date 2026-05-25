@@ -1,0 +1,19 @@
+{
+  "firebase": {
+    "apiKey": "AIzaSyCJHIQXQjLEOSY2PZDA2L0VOvO5c3cFgzw",
+    "authDomain": "amin-uddin-ashik.firebaseapp.com",
+    "databaseURL": "https://amin-uddin-ashik-default-rtdb.firebaseio.com",
+    "projectId": "amin-uddin-ashik",
+    "storageBucket": "amin-uddin-ashik.firebasestorage.app",
+    "messagingSenderId": "705311245182",
+    "appId": "1:705311245182:web:b81a91db57a8c2a281692f"
+  },
+  "cloudinary": {
+    "cloudName": "vdnaevco",
+    "uploadPreset": "aminuddin"
+  },
+  "admin": {
+    "email": "admin@mohasin.bro.bd",
+    "password": "samiya"
+  }
+}
